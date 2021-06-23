@@ -1,0 +1,131 @@
+for i in stdcell prims cpu top io_interface tbs; do \
+          echo "Making $i"; \
+          (cd $i && make clean && make ROOT_DIR=/home/jstine/riscv-o3/hdl_single); \
+        done
+Making stdcell
+make[1]: Entering directory '/home/jstine/riscv-o3/hdl_single/stdcell'
+rm -rf *~ all.done obj stdcell_lib
+make[1]: Leaving directory '/home/jstine/riscv-o3/hdl_single/stdcell'
+make[1]: Entering directory '/home/jstine/riscv-o3/hdl_single/stdcell'
+vlib stdcell_lib
+mkdir obj
+Compiling clockgater.sv
+Compiling osu035_stdcells.v
+make[1]: Leaving directory '/home/jstine/riscv-o3/hdl_single/stdcell'
+Making prims
+make[1]: Entering directory '/home/jstine/riscv-o3/hdl_single/prims'
+rm -rf *~ all.done obj prims_lib
+make[1]: Leaving directory '/home/jstine/riscv-o3/hdl_single/prims'
+make[1]: Entering directory '/home/jstine/riscv-o3/hdl_single/prims'
+vlib prims_lib
+mkdir obj
+Compiling flopr.sv
+Compiling flopenr.sv
+Compiling flopens.sv
+Compiling arrs.sv
+Compiling adder.sv
+Compiling mux2.sv
+Compiling mux3.sv
+Compiling mux4.sv
+Compiling mux5.sv
+Compiling counter.sv
+make[1]: Leaving directory '/home/jstine/riscv-o3/hdl_single/prims'
+Making cpu
+make[1]: Entering directory '/home/jstine/riscv-o3/hdl_single/cpu'
+for i in control datapath cpu_top; do \
+echo "Cleaning $i"; \
+(cd $i && make clean); \
+done
+Cleaning control
+make[2]: Entering directory '/home/jstine/riscv-o3/hdl_single/cpu/control'
+rm -rf *~ all.done obj control_lib
+make[2]: Leaving directory '/home/jstine/riscv-o3/hdl_single/cpu/control'
+Cleaning datapath
+make[2]: Entering directory '/home/jstine/riscv-o3/hdl_single/cpu/datapath'
+rm -rf *~ all.done obj datapath_lib
+make[2]: Leaving directory '/home/jstine/riscv-o3/hdl_single/cpu/datapath'
+Cleaning cpu_top
+make[2]: Entering directory '/home/jstine/riscv-o3/hdl_single/cpu/cpu_top'
+rm -rf *~ all.done obj cpu_top_lib
+make[2]: Leaving directory '/home/jstine/riscv-o3/hdl_single/cpu/cpu_top'
+make[1]: Leaving directory '/home/jstine/riscv-o3/hdl_single/cpu'
+make[1]: Entering directory '/home/jstine/riscv-o3/hdl_single/cpu'
+for i in control datapath cpu_top; do \
+          echo "Making $i"; \
+          (cd $i && make clean && make ROOT_DIR=/home/jstine/riscv-o3/hdl_single); \
+        done
+Making control
+make[2]: Entering directory '/home/jstine/riscv-o3/hdl_single/cpu/control'
+rm -rf *~ all.done obj control_lib
+make[2]: Leaving directory '/home/jstine/riscv-o3/hdl_single/cpu/control'
+make[2]: Entering directory '/home/jstine/riscv-o3/hdl_single/cpu/control'
+vlib control_lib
+mkdir obj
+Compiling aludec.sv
+Compiling maindec.sv
+Compiling controller.sv
+make[2]: Leaving directory '/home/jstine/riscv-o3/hdl_single/cpu/control'
+Making datapath
+make[2]: Entering directory '/home/jstine/riscv-o3/hdl_single/cpu/datapath'
+rm -rf *~ all.done obj datapath_lib
+make[2]: Leaving directory '/home/jstine/riscv-o3/hdl_single/cpu/datapath'
+make[2]: Entering directory '/home/jstine/riscv-o3/hdl_single/cpu/datapath'
+vlib datapath_lib
+mkdir obj
+Compiling shifter.sv
+Compiling magcompare2c.sv
+Compiling magcompare2b.sv
+Compiling magcompare32.sv
+Compiling alu.sv
+Compiling signext.sv
+Compiling regfile.sv
+Compiling datapath.sv
+make[2]: Leaving directory '/home/jstine/riscv-o3/hdl_single/cpu/datapath'
+Making cpu_top
+make[2]: Entering directory '/home/jstine/riscv-o3/hdl_single/cpu/cpu_top'
+rm -rf *~ all.done obj cpu_top_lib
+make[2]: Leaving directory '/home/jstine/riscv-o3/hdl_single/cpu/cpu_top'
+make[2]: Entering directory '/home/jstine/riscv-o3/hdl_single/cpu/cpu_top'
+vlib cpu_top_lib
+mkdir obj
+Compiling riscv.sv
+make[2]: Leaving directory '/home/jstine/riscv-o3/hdl_single/cpu/cpu_top'
+make[1]: Leaving directory '/home/jstine/riscv-o3/hdl_single/cpu'
+Making top
+make[1]: Entering directory '/home/jstine/riscv-o3/hdl_single/top'
+rm -rf *~ all.done obj top_lib
+make[1]: Leaving directory '/home/jstine/riscv-o3/hdl_single/top'
+make[1]: Entering directory '/home/jstine/riscv-o3/hdl_single/top'
+vlib top_lib
+mkdir obj
+Compiling imem.v
+Compiling dmem.v
+Compiling reset_fsm.sv
+Compiling clk_phase.sv
+Compiling top.sv
+Compiling drivers.sv
+Compiling top_mram.sv
+make[1]: Leaving directory '/home/jstine/riscv-o3/hdl_single/top'
+Making io_interface
+make[1]: Entering directory '/home/jstine/riscv-o3/hdl_single/io_interface'
+rm -rf *~ all.done obj io_interface_lib
+make[1]: Leaving directory '/home/jstine/riscv-o3/hdl_single/io_interface'
+make[1]: Entering directory '/home/jstine/riscv-o3/hdl_single/io_interface'
+vlib io_interface_lib
+mkdir obj
+Compiling programmer.sv
+Compiling nvmif.sv
+Compiling gpio.sv
+make[1]: Leaving directory '/home/jstine/riscv-o3/hdl_single/io_interface'
+Making tbs
+make[1]: Entering directory '/home/jstine/riscv-o3/hdl_single/tbs'
+rm -rf *~ all.done obj tbs_lib
+make[1]: Leaving directory '/home/jstine/riscv-o3/hdl_single/tbs'
+make[1]: Entering directory '/home/jstine/riscv-o3/hdl_single/tbs'
+vlib tbs_lib
+mkdir obj
+Compiling MR0A16A.sv
+Compiling spi_dongle.sv
+Compiling riscv_tb.sv
+Compiling riscv_mram_tb.sv
+make[1]: Leaving directory '/home/jstine/riscv-o3/hdl_single/tbs'

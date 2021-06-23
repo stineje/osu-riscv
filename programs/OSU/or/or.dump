@@ -1,0 +1,12 @@
+
+or.out:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	000012b7          	lui	t0,0x1
+   4:	c9828293          	addi	t0,t0,-872 # c98 <_start+0xc98>
+   8:	30f00313          	li	t1,783
+   c:	0062e3b3          	or	t2,t0,t1
+  10:	00000073          	ecall

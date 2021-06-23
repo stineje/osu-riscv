@@ -1,0 +1,10 @@
+
+addi.out:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	00000293          	li	t0,0
+   4:	0ff28313          	addi	t1,t0,255
+   8:	00000073          	ecall

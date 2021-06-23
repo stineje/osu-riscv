@@ -1,0 +1,13 @@
+
+srl.out:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	0f000293          	li	t0,240
+   4:	f1000313          	li	t1,-240
+   8:	00400e13          	li	t3,4
+   c:	01c2d2b3          	srl	t0,t0,t3
+  10:	01c35333          	srl	t1,t1,t3
+  14:	00000073          	ecall

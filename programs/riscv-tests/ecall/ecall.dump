@@ -1,0 +1,14 @@
+
+ecall.out:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <__start>:
+   0:	00100513          	li	a0,1
+   4:	00a00613          	li	a2,10
+   8:	00000073          	ecall
+
+0000000c <success>:
+   c:	00a00513          	li	a0,10
+  10:	00000073          	ecall

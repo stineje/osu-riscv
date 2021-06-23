@@ -1,0 +1,27 @@
+
+jal.out:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <__start>:
+   0:	00100593          	li	a1,1
+   4:	00000093          	li	ra,0
+   8:	0100026f          	jal	tp,18 <target_2>
+
+0000000c <linkaddr_2>:
+   c:	00000013          	nop
+  10:	00000013          	nop
+  14:	0140006f          	j	28 <fail>
+
+00000018 <target_2>:
+  18:	00c00113          	li	sp,12
+  1c:	00411663          	bne	sp,tp,28 <fail>
+
+00000020 <success>:
+  20:	00a00513          	li	a0,10
+  24:	00000073          	ecall
+
+00000028 <fail>:
+  28:	01100513          	li	a0,17
+  2c:	00000073          	ecall

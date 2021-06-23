@@ -1,0 +1,229 @@
+
+slti.out:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <__start>:
+   0:	00100593          	li	a1,1
+   4:	00000093          	li	ra,0
+   8:	0000af13          	slti	t5,ra,0
+   c:	00000e93          	li	t4,0
+  10:	27df1463          	bne	t5,t4,278 <fail>
+
+00000014 <test02>:
+  14:	00200593          	li	a1,2
+  18:	00100093          	li	ra,1
+  1c:	0010af13          	slti	t5,ra,1
+  20:	00000e93          	li	t4,0
+  24:	25df1a63          	bne	t5,t4,278 <fail>
+
+00000028 <test03>:
+  28:	00300593          	li	a1,3
+  2c:	00300093          	li	ra,3
+  30:	0070af13          	slti	t5,ra,7
+  34:	00100e93          	li	t4,1
+  38:	25df1063          	bne	t5,t4,278 <fail>
+
+0000003c <test04>:
+  3c:	00400593          	li	a1,4
+  40:	00700093          	li	ra,7
+  44:	0030af13          	slti	t5,ra,3
+  48:	00000e93          	li	t4,0
+  4c:	23df1663          	bne	t5,t4,278 <fail>
+
+00000050 <test05>:
+  50:	00500593          	li	a1,5
+  54:	00000093          	li	ra,0
+  58:	8000af13          	slti	t5,ra,-2048
+  5c:	00000e93          	li	t4,0
+  60:	21df1c63          	bne	t5,t4,278 <fail>
+
+00000064 <test06>:
+  64:	00600593          	li	a1,6
+  68:	800000b7          	lui	ra,0x80000
+  6c:	0000af13          	slti	t5,ra,0
+  70:	00100e93          	li	t4,1
+  74:	21df1263          	bne	t5,t4,278 <fail>
+
+00000078 <test07>:
+  78:	00700593          	li	a1,7
+  7c:	800000b7          	lui	ra,0x80000
+  80:	8000af13          	slti	t5,ra,-2048
+  84:	00100e93          	li	t4,1
+  88:	1fdf1863          	bne	t5,t4,278 <fail>
+
+0000008c <test08>:
+  8c:	00800593          	li	a1,8
+  90:	00000093          	li	ra,0
+  94:	7ff0af13          	slti	t5,ra,2047
+  98:	00100e93          	li	t4,1
+  9c:	1ddf1e63          	bne	t5,t4,278 <fail>
+
+000000a0 <test09>:
+  a0:	00900593          	li	a1,9
+  a4:	800000b7          	lui	ra,0x80000
+  a8:	fff08093          	addi	ra,ra,-1 # 7fffffff <fail+0x7ffffd87>
+  ac:	0000af13          	slti	t5,ra,0
+  b0:	00000e93          	li	t4,0
+  b4:	1ddf1263          	bne	t5,t4,278 <fail>
+
+000000b8 <test10>:
+  b8:	00a00593          	li	a1,10
+  bc:	800000b7          	lui	ra,0x80000
+  c0:	fff08093          	addi	ra,ra,-1 # 7fffffff <fail+0x7ffffd87>
+  c4:	7ff0af13          	slti	t5,ra,2047
+  c8:	00000e93          	li	t4,0
+  cc:	1bdf1663          	bne	t5,t4,278 <fail>
+
+000000d0 <test11>:
+  d0:	00b00593          	li	a1,11
+  d4:	800000b7          	lui	ra,0x80000
+  d8:	7ff0af13          	slti	t5,ra,2047
+  dc:	00100e93          	li	t4,1
+  e0:	19df1c63          	bne	t5,t4,278 <fail>
+
+000000e4 <test12>:
+  e4:	00c00593          	li	a1,12
+  e8:	800000b7          	lui	ra,0x80000
+  ec:	fff08093          	addi	ra,ra,-1 # 7fffffff <fail+0x7ffffd87>
+  f0:	8000af13          	slti	t5,ra,-2048
+  f4:	00000e93          	li	t4,0
+  f8:	19df1063          	bne	t5,t4,278 <fail>
+
+000000fc <test13>:
+  fc:	00d00593          	li	a1,13
+ 100:	00000093          	li	ra,0
+ 104:	fff0af13          	slti	t5,ra,-1
+ 108:	00000e93          	li	t4,0
+ 10c:	17df1663          	bne	t5,t4,278 <fail>
+
+00000110 <test14>:
+ 110:	00e00593          	li	a1,14
+ 114:	fff00093          	li	ra,-1
+ 118:	0010af13          	slti	t5,ra,1
+ 11c:	00100e93          	li	t4,1
+ 120:	15df1c63          	bne	t5,t4,278 <fail>
+
+00000124 <test15>:
+ 124:	00f00593          	li	a1,15
+ 128:	fff00093          	li	ra,-1
+ 12c:	fff0af13          	slti	t5,ra,-1
+ 130:	00000e93          	li	t4,0
+ 134:	15df1263          	bne	t5,t4,278 <fail>
+
+00000138 <test16>:
+ 138:	01000593          	li	a1,16
+ 13c:	00b00093          	li	ra,11
+ 140:	00d0a093          	slti	ra,ra,13
+ 144:	00100e93          	li	t4,1
+ 148:	13d09863          	bne	ra,t4,278 <fail>
+
+0000014c <test17>:
+ 14c:	01100593          	li	a1,17
+ 150:	00000213          	li	tp,0
+
+00000154 <label1_test17>:
+ 154:	00f00093          	li	ra,15
+ 158:	00a0af13          	slti	t5,ra,10
+ 15c:	000f0313          	mv	t1,t5
+ 160:	00120213          	addi	tp,tp,1 # 1 <__start+0x1>
+ 164:	00200293          	li	t0,2
+ 168:	fe5216e3          	bne	tp,t0,154 <label1_test17>
+ 16c:	00000e93          	li	t4,0
+ 170:	11d31463          	bne	t1,t4,278 <fail>
+
+00000174 <test18>:
+ 174:	01200593          	li	a1,18
+ 178:	00000213          	li	tp,0
+
+0000017c <label1_test18>:
+ 17c:	00a00093          	li	ra,10
+ 180:	0100af13          	slti	t5,ra,16
+ 184:	00000013          	nop
+ 188:	000f0313          	mv	t1,t5
+ 18c:	00120213          	addi	tp,tp,1 # 1 <__start+0x1>
+ 190:	00200293          	li	t0,2
+ 194:	fe5214e3          	bne	tp,t0,17c <label1_test18>
+ 198:	00100e93          	li	t4,1
+ 19c:	0dd31e63          	bne	t1,t4,278 <fail>
+
+000001a0 <test19>:
+ 1a0:	01300593          	li	a1,19
+ 1a4:	00000213          	li	tp,0
+
+000001a8 <label1_test19>:
+ 1a8:	01000093          	li	ra,16
+ 1ac:	0090af13          	slti	t5,ra,9
+ 1b0:	00000013          	nop
+ 1b4:	00000013          	nop
+ 1b8:	000f0313          	mv	t1,t5
+ 1bc:	00120213          	addi	tp,tp,1 # 1 <__start+0x1>
+ 1c0:	00200293          	li	t0,2
+ 1c4:	fe5212e3          	bne	tp,t0,1a8 <label1_test19>
+ 1c8:	00000e93          	li	t4,0
+ 1cc:	0bd31663          	bne	t1,t4,278 <fail>
+
+000001d0 <test20>:
+ 1d0:	01400593          	li	a1,20
+ 1d4:	00000213          	li	tp,0
+
+000001d8 <label1_test20>:
+ 1d8:	00b00093          	li	ra,11
+ 1dc:	00f0af13          	slti	t5,ra,15
+ 1e0:	00120213          	addi	tp,tp,1 # 1 <__start+0x1>
+ 1e4:	00200293          	li	t0,2
+ 1e8:	fe5218e3          	bne	tp,t0,1d8 <label1_test20>
+ 1ec:	00100e93          	li	t4,1
+ 1f0:	09df1463          	bne	t5,t4,278 <fail>
+
+000001f4 <test21>:
+ 1f4:	01500593          	li	a1,21
+ 1f8:	00000213          	li	tp,0
+
+000001fc <label1_test21>:
+ 1fc:	01100093          	li	ra,17
+ 200:	00000013          	nop
+ 204:	0080af13          	slti	t5,ra,8
+ 208:	00120213          	addi	tp,tp,1 # 1 <__start+0x1>
+ 20c:	00200293          	li	t0,2
+ 210:	fe5216e3          	bne	tp,t0,1fc <label1_test21>
+ 214:	00000e93          	li	t4,0
+ 218:	07df1063          	bne	t5,t4,278 <fail>
+
+0000021c <test22>:
+ 21c:	01600593          	li	a1,22
+ 220:	00000213          	li	tp,0
+
+00000224 <label1_test22>:
+ 224:	00c00093          	li	ra,12
+ 228:	00000013          	nop
+ 22c:	00000013          	nop
+ 230:	00e0af13          	slti	t5,ra,14
+ 234:	00120213          	addi	tp,tp,1 # 1 <__start+0x1>
+ 238:	00200293          	li	t0,2
+ 23c:	fe5214e3          	bne	tp,t0,224 <label1_test22>
+ 240:	00100e93          	li	t4,1
+ 244:	03df1a63          	bne	t5,t4,278 <fail>
+
+00000248 <test23>:
+ 248:	01700593          	li	a1,23
+ 24c:	fff02093          	slti	ra,zero,-1
+ 250:	00000e93          	li	t4,0
+ 254:	03d09263          	bne	ra,t4,278 <fail>
+
+00000258 <test24>:
+ 258:	01800593          	li	a1,24
+ 25c:	00ff00b7          	lui	ra,0xff0
+ 260:	0ff08093          	addi	ra,ra,255 # ff00ff <fail+0xfefe87>
+ 264:	fff0a013          	slti	zero,ra,-1
+ 268:	00000e93          	li	t4,0
+ 26c:	01d01663          	bne	zero,t4,278 <fail>
+
+00000270 <success>:
+ 270:	00a00513          	li	a0,10
+ 274:	00000073          	ecall
+
+00000278 <fail>:
+ 278:	01100513          	li	a0,17
+ 27c:	00000073          	ecall

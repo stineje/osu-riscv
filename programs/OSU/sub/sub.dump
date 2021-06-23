@@ -1,0 +1,11 @@
+
+sub.out:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	1f900293          	li	t0,505
+   4:	33c00313          	li	t1,828
+   8:	406283b3          	sub	t2,t0,t1
+   c:	00000073          	ecall

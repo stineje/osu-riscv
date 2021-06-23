@@ -1,0 +1,38 @@
+
+sqrt.out:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	00013337          	lui	t1,0x13
+   4:	20530313          	addi	t1,t1,517 # 13205 <isqrt_return+0x131b5>
+   8:	00000e93          	li	t4,0
+   c:	00100293          	li	t0,1
+  10:	01e29293          	slli	t0,t0,0x1e
+
+00000014 <isqrt_bit>:
+  14:	005323b3          	slt	t2,t1,t0
+  18:	00038663          	beqz	t2,24 <isqrt_loop>
+  1c:	0022d293          	srli	t0,t0,0x2
+  20:	ff5ff06f          	j	14 <isqrt_bit>
+
+00000024 <isqrt_loop>:
+  24:	02028663          	beqz	t0,50 <isqrt_return>
+  28:	005e8e33          	add	t3,t4,t0
+  2c:	01c323b3          	slt	t2,t1,t3
+  30:	00038663          	beqz	t2,3c <isqrt_else>
+  34:	001ede93          	srli	t4,t4,0x1
+  38:	0100006f          	j	48 <isqrt_loop_end>
+
+0000003c <isqrt_else>:
+  3c:	41c30333          	sub	t1,t1,t3
+  40:	001ede93          	srli	t4,t4,0x1
+  44:	005e8eb3          	add	t4,t4,t0
+
+00000048 <isqrt_loop_end>:
+  48:	0022d293          	srli	t0,t0,0x2
+  4c:	fd9ff06f          	j	24 <isqrt_loop>
+
+00000050 <isqrt_return>:
+  50:	00000073          	ecall

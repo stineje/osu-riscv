@@ -1,0 +1,82 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/home/jstine/riscv-o3/hdl_single/cpu/control
+valudec
+Z1 DXx6 sv_std 3 std 0 22 d=_JfHTnXCN[H5FjiaJJc0
+Z2 !s110 1607948769
+!i10b 1
+!s100 ZO>gDgZmDd[cgClO9;zJd3
+ICW5Z[=Lb:E=ONP8j:Q1[X3
+Z3 VDg1SIo80bB@j0V0VzS_@n1
+!s105 aludec_sv_unit
+S1
+R0
+Z4 w1606832857
+8aludec.sv
+Faludec.sv
+L0 1
+Z5 OL;L;10.7e;67
+r1
+!s85 0
+31
+Z6 !s108 1607948769.000000
+!s107 aludec.sv|
+!s90 -quiet|-work|control_lib|aludec.sv|
+!i113 0
+Z7 o-quiet -work control_lib -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z8 tCvgOpt 0
+vcontroller
+R1
+R2
+!i10b 1
+!s100 A1njScD^ll1VZ;PSCJGHL2
+IVU_FK?4`eiZ74dV::<QDZ2
+R3
+!s105 controller_sv_unit
+S1
+R0
+R4
+8controller.sv
+Fcontroller.sv
+L0 1
+R5
+r1
+!s85 0
+31
+R6
+!s107 controller.sv|
+!s90 -quiet|-work|control_lib|controller.sv|
+!i113 0
+R7
+R8
+vmaindec
+R1
+R2
+!i10b 1
+!s100 e<5mCoIZHiJYG35HV1hzX2
+Ic[6SI=:TfZ?cJ3mM5R_oU1
+R3
+!s105 maindec_sv_unit
+S1
+R0
+R4
+8maindec.sv
+Fmaindec.sv
+L0 1
+R5
+r1
+!s85 0
+31
+R6
+!s107 maindec.sv|
+!s90 -quiet|-work|control_lib|maindec.sv|
+!i113 0
+R7
+R8

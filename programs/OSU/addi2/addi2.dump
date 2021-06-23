@@ -1,0 +1,17 @@
+
+addi2.out:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	1fa00293          	li	t0,506
+   4:	38900313          	li	t1,905
+   8:	10c00d13          	li	s10,268
+   c:	00001f37          	lui	t5,0x1
+  10:	eeff0f13          	addi	t5,t5,-273 # eef <_start+0xeef>
+  14:	15900093          	li	ra,345
+  18:	5aa00293          	li	t0,1450
+  1c:	0ff28393          	addi	t2,t0,255
+  20:	01a307b3          	add	a5,t1,s10
+  24:	00000073          	ecall

@@ -1,0 +1,11 @@
+
+xor.out:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	01c00293          	li	t0,28
+   4:	03a00313          	li	t1,58
+   8:	0062c3b3          	xor	t2,t0,t1
+   c:	00000073          	ecall

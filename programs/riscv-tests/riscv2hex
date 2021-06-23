@@ -1,0 +1,72 @@
+#!/usr/bin/python
+
+import os, subprocess, sys
+from optparse import OptionParser
+
+parser = OptionParser(usage="usage: %prog /path/to/riscv_asm input [output]")
+(options,args) = parser.parse_args()
+
+if len(args)!=2 and len(args)!=3:
+    parser.error("Wrong number of args.")
+
+riscv_asm = args[0]
+riscv_file = args[1]
+riscv_file_out = riscv_file[:-2]+".out"
+
+file_path = os.path.join(os.getcwd(),riscv_file)
+file_exists = os.path.isfile(file_path)
+
+if not file_exists:
+    print 'File not found.'
+    sys.exit(1)
+
+out_file_name = file_path.split('/')[-1].split('.')[0] + '.hex'
+
+p = subprocess.Popen([riscv_asm, "-aln", "-march=rv32i", "-W", file_path, "-o", riscv_file_out], stdout=subprocess.PIPE)
+
+out, err = p.communicate()
+
+p2 = subprocess.Popen([riscv_asm[:-2]+"objdump", "-d", riscv_file_out], stdout=subprocess.PIPE)
+
+out2, err = p2.communicate()
+
+q = subprocess.Popen(["rm", os.path.join(os.getcwd(),riscv_file_out)], stderr=subprocess.PIPE)
+
+q.communicate()
+
+hex_out = ''
+
+for lines in out.split('\n'):
+    current_line = lines.split('\t')[0].strip().split(' ')
+    if len(current_line) > 1:
+        hex_out += current_line[-1] + '\n'
+
+if len(args)==3:
+  out_file_name=args[2]
+else:
+  out_file_name = file_path[:len(file_path)-len(file_path.split('/')[-1])] + out_file_name
+
+with open(out_file_name,'w+') as outf:
+    outf.write(hex_out)
+
+with open(riscv_file[:-2]+'.dump','w') as outf:
+    outf.write(out2)
+
+# MRAM memory preloads
+# split the hex file into 16 bit chunks.
+lstupper = []
+lstlower = []
+for line in hex_out.split('\n'):
+    lower = line[4:8]
+    upper = line[0:4]
+    lstupper.append(upper)
+    lstlower.append(lower)
+
+# open two new files for writing
+
+with open(out_file_name+'.lower', 'w+') as outlow:
+    outlow.write('\n'.join(lstlower))
+
+with open(out_file_name+'.upper', 'w+') as outupper:
+    outupper.write('\n'.join(lstupper))
+

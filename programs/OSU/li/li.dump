@@ -1,0 +1,13 @@
+
+li.out:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	00200293          	li	t0,2
+   4:	00002337          	lui	t1,0x2
+   8:	00230313          	addi	t1,t1,2 # 2002 <_start+0x2002>
+   c:	000040b7          	lui	ra,0x4
+  10:	00208093          	addi	ra,ra,2 # 4002 <_start+0x4002>
+  14:	00000073          	ecall

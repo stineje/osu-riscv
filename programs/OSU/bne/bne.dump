@@ -1,0 +1,20 @@
+
+bne.out:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	00500513          	li	a0,5
+   4:	00500993          	li	s3,5
+   8:	00000913          	li	s2,0
+
+0000000c <loop>:
+   c:	00a99863          	bne	s3,a0,1c <end>
+  10:	00a90933          	add	s2,s2,a0
+  14:	00198993          	addi	s3,s3,1
+  18:	ff5ff06f          	j	c <loop>
+
+0000001c <end>:
+  1c:	0aa00293          	li	t0,170
+  20:	00000073          	ecall

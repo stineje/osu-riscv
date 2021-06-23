@@ -1,0 +1,53 @@
+
+towers.out:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	00000513          	li	a0,0
+   4:	04100613          	li	a2,65
+   8:	04200693          	li	a3,66
+   c:	04300713          	li	a4,67
+  10:	ff1ff0ef          	jal	ra,0 <_start>
+
+00000014 <move>:
+  14:	fec10113          	addi	sp,sp,-20
+  18:	00812223          	sw	s0,4(sp)
+  1c:	00912423          	sw	s1,8(sp)
+  20:	01212623          	sw	s2,12(sp)
+  24:	01312823          	sw	s3,16(sp)
+  28:	00050433          	add	s0,a0,zero
+  2c:	000604b3          	add	s1,a2,zero
+  30:	00068933          	add	s2,a3,zero
+  34:	000709b3          	add	s3,a4,zero
+  38:	00100313          	li	t1,1
+  3c:	04640463          	beq	s0,t1,84 <out>
+
+00000040 <recur1>:
+  40:	fff40513          	addi	a0,s0,-1
+  44:	000485b3          	add	a1,s1,zero
+  48:	00098633          	add	a2,s3,zero
+  4c:	000906b3          	add	a3,s2,zero
+  50:	fb1ff0ef          	jal	ra,0 <_start>
+  54:	0300006f          	j	84 <out>
+
+00000058 <recur2>:
+  58:	fff40513          	addi	a0,s0,-1
+  5c:	000985b3          	add	a1,s3,zero
+  60:	00090633          	add	a2,s2,zero
+  64:	000486b3          	add	a3,s1,zero
+  68:	f99ff0ef          	jal	ra,0 <_start>
+
+0000006c <exitmove>:
+  6c:	00012083          	lw	ra,0(sp)
+  70:	00412403          	lw	s0,4(sp)
+  74:	00812483          	lw	s1,8(sp)
+  78:	00c12903          	lw	s2,12(sp)
+  7c:	01012983          	lw	s3,16(sp)
+  80:	01410113          	addi	sp,sp,20
+
+00000084 <out>:
+  84:	00641463          	bne	s0,t1,8c <out+0x8>
+  88:	f79ff06f          	j	0 <_start>
+  8c:	fcdff06f          	j	58 <recur2>

@@ -1,0 +1,20 @@
+
+bge.out:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	00400513          	li	a0,4
+   4:	00100993          	li	s3,1
+   8:	00000913          	li	s2,0
+
+0000000c <loop>:
+   c:	00a9d863          	bge	s3,a0,1c <end>
+  10:	00a90933          	add	s2,s2,a0
+  14:	00298993          	addi	s3,s3,2
+  18:	ff5ff06f          	j	c <loop>
+
+0000001c <end>:
+  1c:	0aa00293          	li	t0,170
+  20:	00000073          	ecall

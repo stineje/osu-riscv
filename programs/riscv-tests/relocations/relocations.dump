@@ -1,0 +1,26 @@
+
+relocations.out:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <__start>:
+   0:	00100593          	li	a1,1
+   4:	000000b7          	lui	ra,0x0
+   8:	00008093          	mv	ra,ra
+
+0000000c <.L0 >:
+   c:	00000117          	auipc	sp,0x0
+  10:	00010113          	mv	sp,sp
+  14:	00209c63          	bne	ra,sp,2c <fail>
+  18:	00000097          	auipc	ra,0x0
+  1c:	00008093          	mv	ra,ra
+  20:	00209663          	bne	ra,sp,2c <fail>
+
+00000024 <success>:
+  24:	00a00513          	li	a0,10
+  28:	00000073          	ecall
+
+0000002c <fail>:
+  2c:	01100513          	li	a0,17
+  30:	00000073          	ecall

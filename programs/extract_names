@@ -1,0 +1,392 @@
+#!/usr/bin/perl
+#
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# INFORMATION SUBJECT TO EXPORT CONTROL LAWS                                    #
+#                                                                               #
+# WARNING - Export of this program is restricted by the Arms Export Control Act #
+# (Title 22, U.S.C., Sec 2751 et seq ) or the Export Administration Act of 1979 #
+# as amended (Title 50, U.S.C. App. 2401, et seq).  Violations of these export  #
+# laws are subject to severe criminal penalties.                                #
+#                                                                               #
+# Releasable to US Government Agencies and their contractors, other requests    #
+# shall be referred to:                                                         #
+#                                                                               #
+# AFRL/RITB                                                                     #
+# Rome, NY 13441-4514                                                           #
+#                                                                               #
+# Developed by Harris, Inc. for Air Force Research Laboratory, RITB.            #
+#                                                                               #
+# Author: Brett Diamond                                                         #
+#                                                                               #
+# Revision: 1.0.1                                                               #
+#                                                                               #
+# Change Log:                                                                   #
+#   1.0    2016-08-12  Initial release                                          #
+#   1.0.1  2016-08-15  Added ability to add comments to custom color file       #
+#   1.0.2  2016-09-14  Added loop detection in color lookup                     #
+#                                                                               #
+# Copyright 2016, Harris, Inc., as an unpublished work.                         #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+#
+use strict;
+
+my $nm = "/usr/bin/nm";  # which external nm to use
+my $grep = "/bin/grep";  # which external grep to use
+
+my $address;
+my $attributes;
+my $custom_color_file;
+my $executable;
+my $function;
+my $key;
+my $length;
+my $library;
+my $line;
+my $name;
+my $path;
+my $map_file;
+my $object;
+my $object_file;
+my $source;
+my %function_colors;
+my %function_type;
+my %functions;
+my %function_names;
+my %library_colors;
+my %color_lookup;
+my %object_files;
+my @map_contents;
+
+# user wants help
+Usage()
+  if (grep(/^-*h(elp)?$/, @ARGV));
+
+# get the name of the executable file from the command line
+$executable = shift;
+Usage("Cannot access file $executable")
+  unless (-f $executable && -r $executable);
+
+# get the optional custom color file from the command line
+$custom_color_file = shift;
+Usage("Cannot access custom color file $custom_color_file")
+  if ($custom_color_file && !(-f $custom_color_file || -r $custom_color_file));
+
+# if executable is binary then assume it really is the executable
+# otherwise assume it is a map file
+if (-B $executable)
+  {
+    $map_file = $executable . ".map";
+  }
+else
+  {
+    ($map_file, $executable) = ($executable, $map_file);
+  }
+
+# we should have the map file name (if it exists)
+# The map file is used to determine the function color
+if (-f $map_file && -r $map_file)
+  {
+    open MAP, "<", $map_file
+      or die ("cannot open map file $map_file\n");
+    @map_contents = <MAP>;
+    close MAP;
+    chomp @map_contents;
+
+    # the executable name is on the last line of the map file
+    ($executable) = $map_contents[$#map_contents] =~ /OUTPUT\((.*) elf32-spv2\)/
+      if (!$executable);
+
+  }
+elsif (!$executable)
+  {
+    Usage("No executable file specified");
+  }
+
+Usage ("Cannot access executable file $executable")
+  if !(-f $executable && -r $executable);
+
+# require nm
+my @symbols = `$nm -p "$executable" | $grep ' T ' 2>/dev/null`;
+chomp @symbols;
+
+# Parse the map file
+# throw away the start of the map file (the part before the first .text)
+$line = shift @map_contents
+  until $line =~ /^\ \.text/;
+unshift @map_contents, $line;
+
+# look through the map file contents, discovering the objects
+for $line (@map_contents)
+  {
+    # if a blank line is encountered then the file has been parsed - the .text portion has been read
+    last
+      unless $line;
+
+    # these lines eitehr start with " .text" and are followed by the address, length, and source information
+    # or they start with the address and the function name
+
+    # if the line specifies an object then collect the information about it
+    if (($address, $length, $attributes) = $line =~ /^ \.text.*?0x([0-9a-fA-F]+).*0x([0-9a-fA-F]+) *(.*)/)
+      {
+        # library lines look like <path>/<library>(<object>)
+        unless ((undef, $path, $library, $object_file) = $attributes =~ /^((.*)\/)?(.*)\((.*)\)/)
+          {
+            (undef, $path, $object_file) = $attributes =~ /^((.*)\/)?(.*)/;
+          }
+        $address = hex($address);
+        $length = hex($length);
+
+        $object = {type        => substr($path,0,1) eq '/' ? 'system' : 'local',
+                   address     => $address,
+                   length      => $length,
+                   object_file => $object_file};
+        $object->{library} = $library
+          if ($library);
+        $object->{path} = $path
+          if ($path);
+        if ($object->{type} eq 'local')
+          {
+            my ($rootname) = $object_file =~ /(.*)\.o/;
+            if (-f $rootname . ".list" || -f $rootname . ".c")
+              {
+                $object->{source} = 'c';
+                $object->{type} = 'c function';
+              }
+            elsif (-f $rootname . ".s")
+              {
+                $object->{source} = 'asm';
+                $object->{type} = 'asm function';
+              }
+          }
+        $object_files{$object_file} = $object; # currently, nothing is done with this
+      }
+    else   # the line specifies a function found in last specified object
+      {
+        ($address, $name) = $line =~ /0x([^ ]*) +(.*)/;
+        $address = hex($address);
+        $function = {address     => $address,
+                     name        => $name,
+                     object      => $object,
+                     object_file => $object_file,
+                     type        => $object->{type}};
+        $function->{library} = $object->{library}
+          if $object->{library};
+        $functions{$address} = $function;
+        $function_names{$name} = $address;
+      }
+  }
+
+# use the nm output for the official names for each address
+for (@symbols)
+  {
+    ($address, $name) = /^(.*?) T (.*)/;
+    $address = hex($address);
+    if ($functions{$address})
+      {
+        # nm names take precidence
+        $functions{$address}{name} = $name
+          if ($functions{$address}{name} ne $name);
+      }
+    else
+      {
+        #shouldn't happen - the map file should have had everything in it
+        $functions{$address}{name} = $name;
+        $functions{$address}{type} = 'unmapped';
+        $function_names{$name} = $address;
+      }
+  }
+
+%color_lookup = ( "local"        => "SpringGreen",
+                  "c function"   => "MediumSpringGreen",
+                  "asm function" => "Goldenrod",
+                  "library"      => "Orange",
+                  "label"        => "grey68",
+                  "toolset"      => "LightGoldenrodYellow",
+                  "system"       => "RoyalBlue",
+                  "unknown"      => "LightSkyBlue",
+                  "default"      => "green",
+                );
+
+# if there is a custom color file,
+# use it to update the default colors, specified above
+if ($custom_color_file)
+  {
+    open CF, "<", $custom_color_file
+      or Usage("Could not read custom color file $custom_color_file\n");
+    while (<CF>)
+      {
+        s/\;.*//;
+        $color_lookup{$1} = $2
+          if (/\s*(.*?)\s*:\s*(.*?)\s*$/);
+      }
+  }
+
+# %terminal_color holds the color for each encountered item (function name
+# and intermediate color lookup).  This flattens the lookup chain for
+# subsequent color lookups of the same type.  For instance, if there are
+# two functions, "hello" and "hi", which are both defined as the type
+# "greeting", and the type "greeting" is defined to be the type "custom",
+# which in turn is of the type "utility", and "utility" is defined to be
+# "green", then, when "hello" is encountered, "hello", "greeting", "custom",
+# and "utility" are all registered in %terminal_color as being "green".  Then
+# when "hi" is encountered, %terminal_color is consulted, and since "hi"
+# hasn't yet been encountered, the lookup process starts.  "hi" is a "greeting",
+# so %terminal_color is searched for "greeting", and since it was added for
+# "hello", it is found, saving the effort of re-looking up every item path.
+my %terminal_color;
+
+# all information has been obtained...
+# output the new radix
+#print "radix define Functions {\n";
+# radix file will be created in address order
+# if you would rather have it be in function name
+# order, use: for $address (sort { $functions{$a}{name} cmp $functions{$b}{name}} keys $function)
+for $address (sort { $a <=> $b} keys %functions)
+  {
+    $function = $functions{$address};
+    next unless $function;
+    my $color;
+    # ok, here is where the color assignment happens
+    # %color_lookup initially contains the color mapping from type
+    # to color (e.g., system files should be RoyalBlue).  This
+    # list can be modified and augmented with the custom_color_file.
+    # The operation is, once a match is found, the color lookup
+    # is repeatedly searched, each time using the previous value
+    # as the new key, until no more can be done (currently, there
+    # is no check for loops -- this would be easy to add, so perhaps
+    # I will add it).
+    #
+    # the advantage of this process is it permits creating layers
+    # of indirection between the item and its color assignment.
+    #
+    # skip if we've seen it before (doubtful, but possible)
+    unless ($color = $terminal_color{$function->{name}})
+      {
+        for $key ('name', 'object_file', 'library', 'type', 'unknown')
+          {
+            # if a match is found
+            if ($color = $color_lookup{$function->{$key}})
+              {
+                # @color_trail will store the lookup links, between
+                # the first item and the final color, but not the
+                # item or color themselves
+                my @color_trail;
+                # make sure there is not a loop when looking up a color
+                # as this would prevent the program from continuing
+                #
+                # start the loop detection with the first color lookup
+                my %loop_detect = ($color => 1);
+                # follow the trail until it can not be followed any more
+                # either because a color was specified (e.g., "#32cd32")
+                # or the trail runs out.  This means that you can redefine
+                # "red" to be "blue" but you cannot redefine "#ff0000"
+                while (!($color =~ /^#[0-9a-zA-Z]{6}$/) &&  $color_lookup{$color})
+                  {
+                    #each newly encountered step is added to the trail
+                    push @color_trail, $color;
+                    $color = $color_lookup{$color};
+                    if ($loop_detect{$color}++)
+                      {
+                        warn "Color loop detected:\n";
+                        warn "  ", join(" -> ", $function->{name}, @color_trail, $color), "\n";
+                        warn "Using default color for ", $function->{name};
+                        undef($color);
+                      }
+                    if ($terminal_color{$color})
+                      {
+                        $color = $terminal_color{$color};
+                        last;
+                      }
+                  }
+                # and the color lookup for this item is done
+                # record the terminal color for the lookup chain
+                map {$terminal_color{$_} = $color} @color_trail;
+                last;
+              }
+          }
+        # if no color was assigned then give it the unknown color
+        $color ||= $color_lookup{unknown};
+        # don't bother registering the function name itself in %terminal_color.
+        # It is very doubtful function names will be re-encountered -- users
+        # will probably not use a function name as a type for other functions.
+        # Even if they do, it will only save a single tree walk.  That is not
+        # much savings for a whole lot of extra storage.
+      }
+    printf("%08X %s %s\n", $address, $function->{name}, $color);
+  }
+
+# all done... specify the default and done!
+#print "    -default hex -color \"${color_lookup{default}}\"\n}\n";
+
+sub Usage
+{
+  my $fh;
+  my $error = shift; # if a parameter is provided then it is treated as an error string
+  if ($error)
+    {
+      # errors cause usage information to be written to standard error
+      $fh = \*STDERR;
+      print $fh $error, "\n";
+    }
+  else
+    {
+      # simple help queries have usage information written to standard out
+      $fh = \*STDOUT;
+    }
+
+  print $fh
+    "Usage:\n  extract_names <file> [<custom colors>]\n",
+    "where <file> is either a map file or an executable\n",
+    "and <custom colors> is a color override file\n\n";
+  if ($error)
+    {
+      print $fh
+        "Use the --help command line option to get usage information\n";
+    }
+  else
+    {
+      print $fh
+        "This program reads the contents of an executable and optionally\n",
+        "a map file to generate function labels in ModelSim.  Although the\n",
+        "map file is not required, it provides a great deal of additional\n",
+        "information which enables coloring the function labels.\n\n",
+        "By default, functions are colored based upon whether they are\n",
+        "system functions (e.g., memset) or functions specific to the\n",
+        "application itself.\n\n",
+        "The custom color file provides a look-up mechanism which is used\n",
+        "to assign custome colors to functions.  Each function can be\n",
+        "colored specifying its name, the object file in which it can\n",
+        "be found, the library that contains the object, or by its\n",
+        "type (e.g., system, c function, etc.)\n\n",
+        "The lookup process continues until a color is found.\n",
+        "This provides a mechanism by which multiple functions\n",
+        "can be defined to have a new type, then that new type can\n",
+        "in turn be given a color.  This also permits defining new\n",
+        "colors.  The format for previously unknown colors is a\n",
+        "seven character string: the first character is a pound sign(\"#\")\n",
+        "followed by the red value, then the green value, and finally\n",
+        "the blue value, where each color value is specified in hexidecimal\n",
+        "value between 00 and FF.  This is the same format used in the X11\n",
+        "standard color specification file, /usr/share/X11/rgb.txt.\n",
+        "This file contains the color names that will already be known\n",
+        "to ModelSim.  Make sure ModelSim knows all colors, either by\n",
+        "ensuring they are in the rgb.txt file or they are specified in\n",
+        "the custom color file; otherwise ModelSim will be sad and not\n",
+        "run the simulation.\n\n",
+        "The format of a custom color file is a series of lines with\n",
+        "lookup information.  Each such line starts with the thing to\n",
+        "color (function, object file, etc.), followed by a colon (\":\"),\n",
+        "followed by its lookup value (color, type, etc.).  Any line that\n",
+        "does not contain a colon will be ignored.  A semicolon (\";\") indicates\n",
+        "the beginning of a comment; all content on the line after the\n",
+        "semicolon will be ignored.  There is no multi-line comment ability.\n\n",
+        "The output is written to standard out; you will probably want to\n",
+        "send this output into a file that can be read by ModelSim.  This\n",
+        "will create a new radix which can be read by ModelSim, then applied\n",
+        "to the function pointer, enabling ModelSim to show you the names of\n",
+        "the different functions being executed, colored by type, or any other\n",
+        "way you would prefer.\n";
+    }
+  exit (!(!$error));
+}
+__END__

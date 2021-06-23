@@ -1,0 +1,24 @@
+
+euclid2.out:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	6f900293          	li	t0,1785
+   4:	22200313          	li	t1,546
+
+00000008 <gcd>:
+   8:	00628e63          	beq	t0,t1,24 <exit>
+   c:	0062a3b3          	slt	t2,t0,t1
+  10:	00039663          	bnez	t2,1c <L1>
+  14:	406282b3          	sub	t0,t0,t1
+  18:	ff1ff06f          	j	8 <gcd>
+
+0000001c <L1>:
+  1c:	40530333          	sub	t1,t1,t0
+  20:	fe9ff06f          	j	8 <gcd>
+
+00000024 <exit>:
+  24:	000280b3          	add	ra,t0,zero
+  28:	00000073          	ecall

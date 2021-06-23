@@ -1,0 +1,21 @@
+
+ovf.out:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	800000b7          	lui	ra,0x80000
+   4:	fff00113          	li	sp,-1
+   8:	00114133          	xor	sp,sp,ra
+   c:	00100093          	li	ra,1
+  10:	001101b3          	add	gp,sp,ra
+  14:	0000ae13          	slti	t3,ra,0
+  18:	0021aeb3          	slt	t4,gp,sp
+  1c:	01de1663          	bne	t3,t4,28 <overflow>
+  20:	00300213          	li	tp,3
+  24:	00000073          	ecall
+
+00000028 <overflow>:
+  28:	7ff00213          	li	tp,2047
+  2c:	00000073          	ecall

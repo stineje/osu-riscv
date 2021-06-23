@@ -1,0 +1,116 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/home/jstine/riscv-o3/hdl_single/tbs
+T_opt
+!s110 1607948800
+VbQGmdWnD10^=Cz:cPYjBY1
+04 8 4 work riscv_tb fast 0
+=1-04d4c455214a-5fd75a00-d1ad0-3471d
+o-quiet -auto_acc_if_foreign -work tbs_lib -L tbs_lib -L prims_lib -L control_lib -L datapath_lib -L cpu_top_lib -L top_lib -debugdb +acc
+Z1 tCvgOpt 0
+n@_opt
+OL;O;10.7e;67
+vMR0A16A
+Z2 DXx6 sv_std 3 std 0 22 d=_JfHTnXCN[H5FjiaJJc0
+Z3 !s110 1607948769
+!i10b 1
+!s100 Im`h=@U4^8C3o6bIW;96Z3
+I9SO4[Rm;^8T0hh1F?7O`b3
+Z4 VDg1SIo80bB@j0V0VzS_@n1
+!s105 MR0A16A_sv_unit
+S1
+R0
+Z5 w1606832857
+8MR0A16A.sv
+FMR0A16A.sv
+L0 13
+Z6 OL;L;10.7e;67
+r1
+!s85 0
+31
+Z7 !s108 1607948769.000000
+!s107 MR0A16A.sv|
+!s90 -quiet|-work|tbs_lib|MR0A16A.sv|
+!i113 0
+Z8 o-quiet -work tbs_lib -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R1
+n@m@r0@a16@a
+vriscv_mram_tb
+R2
+R3
+!i10b 1
+!s100 V6N@<[n]?VVH0knUGd7WS2
+Il20c8]TOhM2a@l1;8W=3L1
+R4
+!s105 riscv_mram_tb_sv_unit
+S1
+R0
+R5
+8riscv_mram_tb.sv
+Friscv_mram_tb.sv
+L0 2
+R6
+r1
+!s85 0
+31
+R7
+!s107 riscv_mram_tb.sv|
+!s90 -quiet|-work|tbs_lib|riscv_mram_tb.sv|
+!i113 0
+R8
+R1
+vriscv_tb
+R2
+R3
+!i10b 1
+!s100 W?S:F6o7COgO2?gWn@;Zc1
+IMJ8czRa1<<Yd>noZeN@k53
+R4
+!s105 riscv_tb_sv_unit
+S1
+R0
+R5
+8riscv_tb.sv
+Friscv_tb.sv
+L0 2
+R6
+r1
+!s85 0
+31
+R7
+!s107 riscv_tb.sv|
+!s90 -quiet|-work|tbs_lib|riscv_tb.sv|
+!i113 0
+R8
+R1
+vspi_dongle
+R2
+R3
+!i10b 1
+!s100 c<MlM92PO?[I^iXaP6AEN0
+Ii3WoUFIIFG?KKnFS`:77M0
+R4
+!s105 spi_dongle_sv_unit
+S1
+R0
+R5
+8spi_dongle.sv
+Fspi_dongle.sv
+L0 8
+R6
+r1
+!s85 0
+31
+R7
+!s107 spi_dongle.sv|
+!s90 -quiet|-work|tbs_lib|spi_dongle.sv|
+!i113 0
+R8
+R1

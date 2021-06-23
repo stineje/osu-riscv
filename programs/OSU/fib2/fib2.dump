@@ -1,0 +1,22 @@
+
+fib2.out:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <fib>:
+   0:	02600e13          	li	t3,38
+   4:	00000393          	li	t2,0
+   8:	00100313          	li	t1,1
+   c:	00000293          	li	t0,0
+
+00000010 <fib_helper>:
+  10:	000e0c63          	beqz	t3,28 <finish>
+  14:	005303b3          	add	t2,t1,t0
+  18:	00030293          	mv	t0,t1
+  1c:	00038313          	mv	t1,t2
+  20:	fffe0e13          	addi	t3,t3,-1
+  24:	fedff06f          	j	10 <fib_helper>
+
+00000028 <finish>:
+  28:	00000073          	ecall

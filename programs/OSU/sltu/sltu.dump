@@ -1,0 +1,12 @@
+
+sltu.out:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	fff00113          	li	sp,-1
+   4:	00100293          	li	t0,1
+   8:	0022a3b3          	slt	t2,t0,sp
+   c:	0022be33          	sltu	t3,t0,sp
+  10:	00000073          	ecall

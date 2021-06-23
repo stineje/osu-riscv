@@ -1,0 +1,59 @@
+
+fib.out:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	00000093          	li	ra,0
+   4:	00000113          	li	sp,0
+   8:	00000193          	li	gp,0
+   c:	00000213          	li	tp,0
+  10:	00000293          	li	t0,0
+  14:	00000313          	li	t1,0
+  18:	00000393          	li	t2,0
+  1c:	00000413          	li	s0,0
+  20:	00000493          	li	s1,0
+  24:	00000513          	li	a0,0
+  28:	00000593          	li	a1,0
+  2c:	00000613          	li	a2,0
+  30:	00000693          	li	a3,0
+  34:	00000713          	li	a4,0
+  38:	00000793          	li	a5,0
+  3c:	00000813          	li	a6,0
+  40:	00000893          	li	a7,0
+  44:	00000913          	li	s2,0
+  48:	00000993          	li	s3,0
+  4c:	00000a13          	li	s4,0
+  50:	00000a93          	li	s5,0
+  54:	00000b13          	li	s6,0
+  58:	00000b93          	li	s7,0
+  5c:	00000c13          	li	s8,0
+  60:	00000c93          	li	s9,0
+  64:	00000d13          	li	s10,0
+  68:	00000d93          	li	s11,0
+  6c:	00000e13          	li	t3,0
+  70:	00000e93          	li	t4,0
+  74:	00000f13          	li	t5,0
+  78:	00000f93          	li	t6,0
+  7c:	02600e13          	li	t3,38
+  80:	00000393          	li	t2,0
+  84:	00100313          	li	t1,1
+  88:	00000293          	li	t0,0
+
+0000008c <fib>:
+  8c:	000e0c63          	beqz	t3,a4 <finish>
+  90:	005303b3          	add	t2,t1,t0
+  94:	00030293          	mv	t0,t1
+  98:	00038313          	mv	t1,t2
+  9c:	fffe0e13          	addi	t3,t3,-1
+  a0:	fedff06f          	j	8c <fib>
+
+000000a4 <finish>:
+  a4:	00f00393          	li	t2,15
+  a8:	00c000ef          	jal	ra,b4 <fun1>
+  ac:	fe702e23          	sw	t2,-4(zero) # fffffffc <fun1+0xffffff48>
+  b0:	00000073          	ecall
+
+000000b4 <fun1>:
+  b4:	00008067          	ret

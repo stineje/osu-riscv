@@ -1,0 +1,46 @@
+
+lui.out:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <__start>:
+   0:	00100593          	li	a1,1
+   4:	000000b7          	lui	ra,0x0
+   8:	00000e93          	li	t4,0
+   c:	05d09c63          	bne	ra,t4,64 <fail>
+
+00000010 <test02>:
+  10:	00200593          	li	a1,2
+  14:	fffff0b7          	lui	ra,0xfffff
+  18:	4010d093          	srai	ra,ra,0x1
+  1c:	80000e93          	li	t4,-2048
+  20:	05d09263          	bne	ra,t4,64 <fail>
+
+00000024 <test03>:
+  24:	00300593          	li	a1,3
+  28:	7ffff0b7          	lui	ra,0x7ffff
+  2c:	4140d093          	srai	ra,ra,0x14
+  30:	7ff00e93          	li	t4,2047
+  34:	03d09863          	bne	ra,t4,64 <fail>
+
+00000038 <test04>:
+  38:	00400593          	li	a1,4
+  3c:	800000b7          	lui	ra,0x80000
+  40:	4140d093          	srai	ra,ra,0x14
+  44:	80000e93          	li	t4,-2048
+  48:	01d09e63          	bne	ra,t4,64 <fail>
+
+0000004c <test05>:
+  4c:	00500593          	li	a1,5
+  50:	80000037          	lui	zero,0x80000
+  54:	00000e93          	li	t4,0
+  58:	01d01663          	bne	zero,t4,64 <fail>
+
+0000005c <success>:
+  5c:	00a00513          	li	a0,10
+  60:	00000073          	ecall
+
+00000064 <fail>:
+  64:	01100513          	li	a0,17
+  68:	00000073          	ecall

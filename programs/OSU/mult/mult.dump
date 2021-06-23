@@ -1,0 +1,66 @@
+
+mult.out:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	00000093          	li	ra,0
+   4:	00000113          	li	sp,0
+   8:	00000193          	li	gp,0
+   c:	00000213          	li	tp,0
+  10:	00000293          	li	t0,0
+  14:	00000313          	li	t1,0
+  18:	00000393          	li	t2,0
+  1c:	00000413          	li	s0,0
+  20:	00000493          	li	s1,0
+  24:	00000513          	li	a0,0
+  28:	00000593          	li	a1,0
+  2c:	00000613          	li	a2,0
+  30:	00000693          	li	a3,0
+  34:	00000713          	li	a4,0
+  38:	00000793          	li	a5,0
+  3c:	00000813          	li	a6,0
+  40:	00000893          	li	a7,0
+  44:	00000913          	li	s2,0
+  48:	00000993          	li	s3,0
+  4c:	00000a13          	li	s4,0
+  50:	00000a93          	li	s5,0
+  54:	00000b13          	li	s6,0
+  58:	00000b93          	li	s7,0
+  5c:	00000c13          	li	s8,0
+  60:	00000c93          	li	s9,0
+  64:	00000d13          	li	s10,0
+  68:	00000d93          	li	s11,0
+  6c:	00000e13          	li	t3,0
+  70:	00000e93          	li	t4,0
+  74:	00000f13          	li	t5,0
+  78:	00000f93          	li	t6,0
+  7c:	813470b7          	lui	ra,0x81347
+  80:	fca08093          	addi	ra,ra,-54 # 81346fca <done+0x81346efa>
+  84:	00008493          	mv	s1,ra
+  88:	17c3a137          	lui	sp,0x17c3a
+  8c:	57110113          	addi	sp,sp,1393 # 17c3a571 <done+0x17c3a4a1>
+  90:	00010413          	mv	s0,sp
+  94:	00000293          	li	t0,0
+  98:	01f28293          	addi	t0,t0,31
+  9c:	00000913          	li	s2,0
+
+000000a0 <loop>:
+  a0:	00147293          	andi	t0,s0,1
+  a4:	00028a63          	beqz	t0,b8 <next>
+  a8:	009989b3          	add	s3,s3,s1
+  ac:	0099b2b3          	sltu	t0,s3,s1
+  b0:	005a0a33          	add	s4,s4,t0
+  b4:	012a0a33          	add	s4,s4,s2
+
+000000b8 <next>:
+  b8:	01f4d293          	srli	t0,s1,0x1f
+  bc:	00149493          	slli	s1,s1,0x1
+  c0:	00191913          	slli	s2,s2,0x1
+  c4:	00590933          	add	s2,s2,t0
+  c8:	00145413          	srli	s0,s0,0x1
+  cc:	fc041ae3          	bnez	s0,a0 <loop>
+
+000000d0 <done>:
+  d0:	00000073          	ecall

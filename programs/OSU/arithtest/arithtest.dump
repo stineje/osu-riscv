@@ -1,0 +1,26 @@
+
+arithtest.out:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	00100293          	li	t0,1
+   4:	00300313          	li	t1,3
+   8:	00530933          	add	s2,t1,t0
+   c:	00b00993          	li	s3,11
+  10:	0129ea33          	or	s4,s3,s2
+  14:	012a7ab3          	and	s5,s4,s2
+  18:	406a0b33          	sub	s6,s4,t1
+  1c:	7ffa8a13          	addi	s4,s5,2047
+  20:	01402423          	sw	s4,8(zero) # 8 <_start+0x8>
+  24:	00802a83          	lw	s5,8(zero) # 8 <_start+0x8>
+  28:	015a0b33          	add	s6,s4,s5
+  2c:	016aebb3          	or	s7,s5,s6
+  30:	00000c13          	li	s8,0
+  34:	015a0463          	beq	s4,s5,3c <end>
+  38:	008c0c13          	addi	s8,s8,8
+
+0000003c <end>:
+  3c:	001c0c13          	addi	s8,s8,1
+  40:	00000073          	ecall

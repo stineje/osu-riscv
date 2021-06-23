@@ -1,0 +1,189 @@
+$date
+	Tue Jul 28 11:20:29 2020
+$end
+$version
+	QuestaSim Version 2019.1
+$end
+$timescale
+	1ps
+$end
+
+$scope module testbench $end
+$var parameter 24 ! offset $end
+$var parameter 32 " word0 $end
+$var parameter 32 # word1 $end
+$var reg 1 $ flash_csb $end
+$var reg 1 % flash_clk $end
+$var wire 1 & flash_io0 $end
+$var wire 1 ' flash_io1 $end
+$var wire 1 ( flash_io2 $end
+$var wire 1 ) flash_io3 $end
+$var reg 1 * flash_io0_oe $end
+$var reg 1 + flash_io1_oe $end
+$var reg 1 , flash_io2_oe $end
+$var reg 1 - flash_io3_oe $end
+$var reg 1 . flash_io0_dout $end
+$var reg 1 / flash_io1_dout $end
+$var reg 1 0 flash_io2_dout $end
+$var reg 1 1 flash_io3_dout $end
+$var reg 8 2 rdata [7:0] $end
+$var integer 32 3 errcount $end
+
+$scope task expect $end
+$var reg 8 4 data [7:0] $end
+$upscope $end
+
+$scope task xfer_begin $end
+$upscope $end
+
+$scope task xfer_dummy $end
+$upscope $end
+
+$scope task xfer_end $end
+$upscope $end
+
+$scope task xfer_spi $end
+$var reg 8 5 data [7:0] $end
+$var integer 32 6 i $end
+$upscope $end
+
+$scope task xfer_qspi_wr $end
+$var reg 8 7 data [7:0] $end
+$var integer 32 8 i $end
+$upscope $end
+
+$scope task xfer_qspi_rd $end
+$var integer 32 9 i $end
+$upscope $end
+
+$scope task xfer_qspi_ddr_wr $end
+$var reg 8 : data [7:0] $end
+$var integer 32 ; i $end
+$upscope $end
+
+$scope task xfer_qspi_ddr_rd $end
+$var integer 32 < i $end
+$upscope $end
+
+$scope module uut $end
+$var parameter 32 = verbose $end
+$var parameter 32 > latency $end
+$var parameter 4 ? mode_spi $end
+$var parameter 4 @ mode_dspi_rd $end
+$var parameter 4 A mode_dspi_wr $end
+$var parameter 4 B mode_qspi_rd $end
+$var parameter 4 C mode_qspi_wr $end
+$var parameter 4 D mode_qspi_ddr_rd $end
+$var parameter 4 E mode_qspi_ddr_wr $end
+$var wire 1 F csb $end
+$var wire 1 G clk $end
+$var wire 1 & io0 $end
+$var wire 1 ' io1 $end
+$var wire 1 ( io2 $end
+$var wire 1 ) io3 $end
+$var reg 8 H buffer [7:0] $end
+$var integer 32 I bitcount $end
+$var integer 32 J bytecount $end
+$var integer 32 K dummycount $end
+$var reg 8 L spi_cmd [7:0] $end
+$var reg 8 M xip_cmd [7:0] $end
+$var reg 24 N spi_addr [23:0] $end
+$var reg 8 O spi_in [7:0] $end
+$var reg 8 P spi_out [7:0] $end
+$var reg 1 Q spi_io_vld $end
+$var reg 1 R powered_up $end
+$var reg 4 S mode [3:0] $end
+$var reg 4 T next_mode [3:0] $end
+$var reg 1 U io0_oe $end
+$var reg 1 V io1_oe $end
+$var reg 1 W io2_oe $end
+$var reg 1 X io3_oe $end
+$var reg 1 Y io0_dout $end
+$var reg 1 Z io1_dout $end
+$var reg 1 [ io2_dout $end
+$var reg 1 \ io3_dout $end
+$var wire 1 ] io0_delayed $end
+$var wire 1 ^ io1_delayed $end
+$var wire 1 _ io2_delayed $end
+$var wire 1 ` io3_delayed $end
+$var reg 1024 a firmware_file [1023:0] $end
+
+$scope task spi_action $end
+$upscope $end
+
+$scope task ddr_rd_edge $end
+$upscope $end
+
+$scope task ddr_wr_edge $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+1$
+0%
+1*
+0+
+0,
+0-
+0.
+0/
+00
+01
+b0 H
+bx L
+b0 M
+bx N
+bx O
+bx P
+0Q
+0R
+b1 S
+b0 T
+0U
+0V
+0W
+0X
+0Y
+0Z
+0[
+0\
+b1100110011010010111001001101101011101110110000101110010011001010011001000101110011010000110010101111000 a
+bx 2
+bx 4
+b11 5
+bx 7
+bx :
+b100000000000000000000 !
+b10010011 "
+b110010011 #
+b0 =
+b1000 >
+b1 ?
+b10 @
+b11 A
+b100 B
+b101 C
+b110 D
+b111 E
+b0 I
+b0 J
+b0 K
+b0 3
+b0 6
+bx 8
+bx 9
+bx ;
+bx <
+x&
+x'
+x(
+x)
+x]
+x^
+x_
+x`
+0G
+1F
+$end
