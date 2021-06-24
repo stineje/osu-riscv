@@ -24,12 +24,12 @@ flow: clean_build copy
 	    cd OpenROAD-flow-scripts/flow && make DESIGN_CONFIG=./designs/sky130hs/riscv32i/config.mk
 
 clean_build:
-	echo "Cleaning old make of OpenROAD"
+	@echo "Cleaning old make of OpenROAD"
 	cd OpenROAD-flow-scripts/flow && make clean_all
 
 clean_netlist:
-	echo "Cleaning old netlist from OpenROAD"
-	rm -f ${HDL_DIR}/*
+	@echo "Cleaning old netlist from OpenROAD"
+	@if (`ls ${HDL_DIR} | wc -l` != 0) rm -rf ${HDL_DIR}/*
 
 fix_build:
 	rm OpenROAD-flow-scripts/tools/build/*
