@@ -1,6 +1,9 @@
 # osu-riscv
 OSU Datapath/Control RV32 Single-Cycle and Pipelined Architecture in SV
 
+To populate the OpenROAD submodule:
+    git submodule update --init
+
 To build OpenROAD:
 	First, run:
 		`scl enable devtoolset-7 bash`
