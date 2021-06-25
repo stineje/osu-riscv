@@ -4,7 +4,7 @@
 .PHONY: flow copy build clean_netlist clean_build fix_build 
 
 RUN_DIR:=$(shell pwd)
-SHELL:=csh
+SHELL:=bash
 HDL_DIR:=./OpenROAD-flow-scripts/flow/designs/src/riscv32i
 DESIGN?=single
 
@@ -13,11 +13,20 @@ build:
 	cd OpenROAD-flow-scripts && source setup_env.sh
 
 copy: clean_netlist
-	cp ./hdl_${DESIGN}/top/*.sv ${HDL_DIR} 
+	@for f in ./hdl_${DESIGN}/top/*.sv; do \
+		cp "$$f" "$${f%.sv}.v"; \
+	done
+	@for f in ./hdl_${DESIGN}/cpu/*/*.sv; do \
+		cp "$$f" "$${f%.sv}.v"; \
+	done
+	@for f in ./hdl_${DESIGN}/prims/*.sv; do \
+		cp "$$f" "$${f%.sv}.v"; \
+	done
+	cp ./hdl_${DESIGN}/top/*.v ${HDL_DIR} 
 	cp ./hdl_${DESIGN}/top/dmem.v ${HDL_DIR} 
 	cp ./hdl_${DESIGN}/top/imem.v ${HDL_DIR} 
-	cp ./hdl_${DESIGN}/cpu/*/*.sv ${HDL_DIR}
-	cp ./hdl_${DESIGN}/prims/*.sv ${HDL_DIR}
+	cp ./hdl_${DESIGN}/cpu/*/*.v ${HDL_DIR}
+	cp ./hdl_${DESIGN}/prims/*.v ${HDL_DIR}
 
 flow: clean_build copy
 	    @echo "Making ${DESIGN} design"
@@ -29,7 +38,7 @@ clean_build:
 
 clean_netlist:
 	@echo "Cleaning old netlist from OpenROAD"
-	@if (`ls ${HDL_DIR} | wc -l` != 0) rm -rf ${HDL_DIR}/*
+	@rm -f ${HDL_DIR}/*
 
 fix_build:
 	rm OpenROAD-flow-scripts/tools/build/*
