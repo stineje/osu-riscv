@@ -5,11 +5,7 @@ To populate the OpenROAD submodule:
     git submodule update --init
 
 To build OpenROAD:
-	First, run:
-		`scl enable devtoolset-7 bash`
-	Next, in the same terminal, run:
-		`make build`
-	This should set up the enviornment to be able to run the flow.
+    Follow the instructions at https://github.com/The-OpenROAD-Project/OpenROAD-flow-scripts#building-from-source
 
 To run the OpenROAD flow:
 	Must have first built the OpenROAD enviornment - see above.
