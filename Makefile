@@ -53,5 +53,4 @@ fix_build:
 	cd OpenROAD-flow-scripts && ./build_openroad -o 
 	cd OpenROAD-flow-scripts &&  source setup_env.sh
 
-copy_results:
 	
